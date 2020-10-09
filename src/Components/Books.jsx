@@ -1,5 +1,11 @@
 import React from "react";
-
+import ReactDom from 'react-dom';
+import Popup from 'react-popup';
+import {
+  Popover,
+  OverlayTrigger,
+  Button
+} from "react-bootstrap";
 const Books = ({posts}) => {
 console.log(posts);
 
@@ -14,9 +20,6 @@ function truncate(str) {
   return (
     <>
     {posts.map(post => (
-    // if(post.volumeInfo.imageLinks.thumbnail == undefined) {
-    //   console.log("")
-    // }
     <div key={post.id} className="card mb-3" style={{ maxWidth: 1200, maxHeight: 200}}>
         <div className="row">
             <div className="col-md-4">
@@ -27,6 +30,9 @@ function truncate(str) {
                   <h4 className="card-title">{post.volumeInfo.title}</h4>
                   <p className="card-text">{truncate(post.volumeInfo.description)}</p>
                 </div>
+            </div>
+            <div>
+
             </div>
         </div>
     </div>
