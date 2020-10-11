@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
-import $ from "jquery";
+import "./scss/main.scss";
 import axios from "axios";
 import {
   Container,
@@ -33,7 +32,7 @@ function App() {
       .get(`https://www.googleapis.com/books/v1/volumes?q=${query}`)
       .then((res) => {
         console.log("Data from API", res.data);
-        
+
         setCards(res.data.items);
         setLoading(false);
       })
@@ -68,7 +67,7 @@ function App() {
           <Row>
             <Col></Col>
             <Col className="col-6 text-center">
-              <h1 className="app">Simple Book App</h1>
+              <h1 className="app pb-2">Simple Book App</h1>
 
               <InputGroup className="mb-3">
                 <FormControl
@@ -84,10 +83,9 @@ function App() {
                     name="pagNumber"
                     onChange={(e) => handleInputChange(e.target.value)}
                   >
+                    <option>Select</option>
                     <option value="5">5</option>
-                    <option selected value="10">
-                      10
-                    </option>
+                    <option value="10">10</option>
                     <option value="15">15</option>
                     <option value="20">20</option>
                   </select>
