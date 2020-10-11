@@ -7,6 +7,11 @@ const Books = ({ posts }) => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  function sayHello(name) {
+    //alert(`hello, ${name}`);
+    setShow(name);
+  }
+
 
   function truncate(str) {
     if (str !== undefined) {
@@ -39,12 +44,12 @@ const Books = ({ posts }) => {
                 </p>
 
                 <Card.Body>
-                  <Button className="btn btn-primary" onClick={handleShow}>
-                    View
+                  <Button className="btn btn-primary" onClick={() => sayHello(post.id)}>
+                    View 
                   </Button>
                 </Card.Body>
 
-                <Modal show={show} onHide={handleClose}>
+                <Modal show={show==post.id} onHide={handleClose}>
                   <Modal.Header closeButton>
                     <Modal.Title>{post.volumeInfo.title}</Modal.Title>
                   </Modal.Header>
@@ -68,3 +73,4 @@ const Books = ({ posts }) => {
 };
 
 export default Books;
+
