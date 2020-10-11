@@ -12,11 +12,27 @@ const Books = ({ posts }) => {
     setShow(name);
   }
 
-
-  function truncate(str) {
+  function truncateDesd(str) {
     if (str !== undefined) {
       return str.length > 10 ? str.substring(0, 180) + "..." : str;
     } else {
+    }
+  }
+
+  function truncateTitle(str) {
+    if (str !== undefined) {
+      return str.length > 10 ? str.substring(0, 50) : str;
+    } else {
+    }
+  }
+
+  function checkIfImageExists(img) {
+    if (img.volumeInfo.hasOwnProperty("imageLinks")) {
+      console.log("TRUE");
+      return true;
+    } else {
+      console.log("FALSE");
+      return false;
     }
   }
 
@@ -32,37 +48,55 @@ const Books = ({ posts }) => {
             <div className="col-md-4">
               <img
                 className="card-img"
-                src={post.volumeInfo.imageLinks.thumbnail}
+                src={
+                  checkIfImageExists(post)
+                    ? post.volumeInfo.imageLinks.thumbnail
+                    : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
+                }
                 style={{ maxHeight: 200 }}
               />
             </div>
             <div className="col-md-8">
               <div className="card-body">
-                <h4 className="card-title">{post.volumeInfo.title}</h4>
+                <h4 className="card-title">
+                  {truncateTitle(post.volumeInfo.title)}
+                </h4>
                 <p className="card-text">
-                  {truncate(post.volumeInfo.description)}
+                  {truncateDesd(post.volumeInfo.description)}
                 </p>
-
+              </div>
+              <div style={{ position: "absolute", bottom: 0 }}>
                 <Card.Body>
-                  <Button className="btn btn-primary" onClick={() => sayHello(post.id)}>
-                    View 
+                  <Button
+                    className="btn btn-primary"
+                    onClick={() => sayHello(post.id)}
+                  >
+                    View
                   </Button>
                 </Card.Body>
-
-                <Modal show={show==post.id} onHide={handleClose}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>{post.volumeInfo.title}</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    {post.volumeInfo.description}
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                      Close
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
               </div>
+
+              <Modal show={show == post.id} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>{post.volumeInfo.title}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <h3>Description</h3>
+                  <p>{post.volumeInfo.description}</p>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                  <a
+                    href={post.volumeInfo.infoLink}
+                    variant="secondary"
+                    target="_blank"
+                  >
+                    Link to book
+                  </a>
+                </Modal.Footer>
+              </Modal>
             </div>
             <div></div>
           </div>
@@ -73,4 +107,3 @@ const Books = ({ posts }) => {
 };
 
 export default Books;
-
